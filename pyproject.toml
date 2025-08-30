@@ -1,7 +1,8 @@
 [project]
 name = "fluent-telegrinder"
-version = "1.0.0"
+version = "1.0.1"
 description = "Fluent i18n implementation for telegrinder"
+readme = "README.md"
 authors = [
     { name = "ventuero", email = "amerfoe@gmail.com" }
 ]
