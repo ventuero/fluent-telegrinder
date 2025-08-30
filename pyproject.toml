@@ -1,0 +1,20 @@
+[project]
+name = "fluent-telegrinder"
+version = "1.0.0"
+description = "Fluent i18n implementation for telegrinder"
+authors = [
+    { name = "ventuero", email = "amerfoe@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fluent-runtime>=0.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.12.11",
+    "telegrinder",
+]
+
+[tool.uv.sources]
+telegrinder = { git = "https://github.com/timoniq/telegrinder", rev = "dev" }
