@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from collections.abc import Callable
+from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
 
@@ -12,6 +13,7 @@ class FluentConfig:
     source: IsNode
     default_locale: str = "en"
     replace_underscore: bool = True
+    functions: dict[str, Callable] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not isinstance(self.folder, Path):
@@ -30,11 +32,17 @@ class FluentConfig:
                 continue
 
             loader = FluentResourceLoader(str(self.folder / "{locale}")) # type: ignore
-            result[locale_dir.name] = FluentLocalization(
+            localization = FluentLocalization(
                 locales=[locale_dir.name],
                 resource_ids=ftl_files,
                 resource_loader=loader,
             )
+            for name, func in self.functions.items():
+                if not localization.functions:
+                    localization.functions = {}
+                localization.functions[name] = func
+
+            result[locale_dir.name] = localization
 
         return result
 
